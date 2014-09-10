@@ -15,8 +15,9 @@
 #include <cassert>  // assert
 #include <iostream> // cin, cout, endl, istream, ostream
 #include <utility>  // make_pair, pair
+#include <unordered_map>
 
-#include "Collatz.h"
+std::unordered_map<int, int> lazycache;
 
 // ------------
 // collatz_read
@@ -36,23 +37,37 @@ std::pair<int, int> collatz_read (std::istream& r) {
 // ------------
 
 int collatz_eval (int i, int j) {
-    if(i<1 || j<1) { return -1;}
+//    assert(i>0);
+//    assert(j>0);
     int max = 0;
-    int n;
-    for(n=i;n<=j;++n) {
+    int a,b;
+    if (j<i) {
+        a=j;b=i;
+    } else {
+        a=i;b=j;
+    }
+    while( a<=b ) {
         int length = 1;
-        int t = n;
-        while(t>1) {
+        unsigned t = a;
+        while( t!=1 ) {
+            if(lazycache[t]) {
+                length+=lazycache[t]-1;
+                break;
+            }
             if(t&1) {//t is odd
                 t=3*t+1;
+                t>>=1;
+                length+=2;
             } else {
-                t=t>>1;
-            }
+                t>>=1;
                 length+=1;
+            }
         }
+        lazycache[a]=length;
         if(length>max) {
             max = length;
         }
+        a++;
      }
     return max;}
 
