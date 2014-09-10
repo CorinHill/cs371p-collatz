@@ -37,15 +37,14 @@ int collatz_eval (int i, int j) {
     int n;
     for(n=i;n<=j;++n) {
         int length = 1;
-        int t = i;
+        int t = n;
         while(t>1) {
             if(t&1) {//t is odd
-                t=3*(t>>1)+1;
-                length+=2;
+                t=3*t+1;
             } else {
                 t=t>>1;
-                length+=1;
             }
+                length+=1;
         }
         if(length>max) {
             max = length;
