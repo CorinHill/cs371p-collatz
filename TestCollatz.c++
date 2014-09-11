@@ -27,11 +27,23 @@
 // read
 // ----
 
-TEST(Collatz, read) {
+TEST(Collatz, read_1) {
     std::istringstream r("1 10\n");
     const std::pair<int, int> p = collatz_read(r);
     ASSERT_EQ( 1, p.first);
     ASSERT_EQ(10, p.second);}
+
+TEST(Collatz, read_2) {
+    std::istringstream r("1234 9999\n");
+    const std::pair<int, int> p = collatz_read(r);
+    ASSERT_EQ(1234, p.first);
+    ASSERT_EQ(9999, p.second);}
+
+TEST(Collatz, read_3) {
+    std::istringstream r("\n");
+    const std::pair<int, int> p = collatz_read(r);
+    ASSERT_EQ(0, p.first);
+    ASSERT_EQ(0, p.second);}
 
 // ----
 // eval
@@ -46,31 +58,56 @@ TEST(Collatz, eval_2) {
     ASSERT_EQ(125, v);}
 
 TEST(Collatz, eval_3) {
-    const int v = collatz_eval(201, 210);
+    const int v = collatz_eval(210, 201);
     ASSERT_EQ(89, v);}
 
 TEST(Collatz, eval_4) {
     const int v = collatz_eval(900, 1000);
     ASSERT_EQ(174, v);}
 
+TEST(Collatz, eval_5) {
+    const int v = collatz_eval(999999, 999999);
+    ASSERT_EQ(259, v);}
+
+TEST(Collatz, eval_6) {
+    const int v = collatz_eval(666, 7777);
+    ASSERT_EQ(262, v);}
+
 // -----
 // print
 // -----
 
-TEST(Collatz, print) {
+TEST(Collatz, print_1) {
     std::ostringstream w;
     collatz_print(w, 1, 10, 20);
     ASSERT_EQ("1 10 20\n", w.str());}
+
+TEST(Collatz, print_2) {
+    std::ostringstream w;
+    collatz_print(w, 100, 200, 125);
+    ASSERT_EQ("100 200 125\n", w.str());}
 
 // -----
 // solve
 // -----
 
-TEST(Collatz, solve) {
+TEST(Collatz, solve_1) {
     std::istringstream r("1 10\n100 200\n201 210\n900 1000\n");
     std::ostringstream w;
     collatz_solve(r, w);
     ASSERT_EQ("1 10 20\n100 200 125\n201 210 89\n900 1000 174\n", w.str());}
+
+TEST(Collatz, solve_2) {
+    std::istringstream r("999999 999999\n666 7777\n");
+    std::ostringstream w;
+    collatz_solve(r, w);
+    ASSERT_EQ("999999 999999 259\n666 7777 262\n", w.str());}
+
+TEST(Collatz, solve_3) {
+    std::istringstream r("\n");
+    std::ostringstream w;
+    collatz_solve(r, w);
+    ASSERT_EQ("", w.str());}
 
 /*
 % ls -al /usr/include/gtest/

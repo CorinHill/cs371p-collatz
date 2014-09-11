@@ -5,11 +5,11 @@ clean:
 	rm -f *.gcno
 	rm -f *.gcov
 	rm -f RunCollatz
-	rm -f RunCollatz.out
+	#rm -f RunCollatz.out
 	rm -f RunCollatz.tmp
 	rm -f RunCollatz.valgrind.out
 	rm -f TestCollatz
-	rm -f TestCollatz.out
+	#rm -f TestCollatz.out
 	rm -f TestCollatz.valgrind.out
 
 scrub:
